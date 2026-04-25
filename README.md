@@ -137,5 +137,5 @@ FUTURE_ML_01/
 ---
 
 ## 👩‍💻 Author
-Shruti Shinde
-B.E. AIML Student
+ - Shruti Shinde
+ - B.E. AIML Student
