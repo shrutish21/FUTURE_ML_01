@@ -1,5 +1,3 @@
-import os
-os.makedirs("outputs/graphs", exist_ok=True)
 
 #Loading the preprocessed data
 from preprocessing import load_and_prepare_data
@@ -14,7 +12,7 @@ plt.title("Daily Sales Trend")
 plt.xlabel("Date")
 plt.ylabel("Sales")
 plt.grid(True)
-plt.savefig("outputs/graphs/daily_trend.png")
+plt.savefig("outputs/graphs/linear_daily_trend.png")
 plt.show()
 
 
@@ -34,7 +32,6 @@ plt.bar(monthly_sales.index, monthly_sales.values)
 plt.title("Monthly Trend")
 plt.xlabel("Month")
 plt.ylabel("Total Sales")
-plt.grid(True)
 plt.show()
 
 #yearly trend
@@ -44,10 +41,9 @@ plt.bar(yearly_sales.index, yearly_sales.values)
 plt.title("Yearly trend")
 plt.xlabel("Years")
 plt.ylabel("Sales")
-plt.grid(True)
 plt.show()
 
-#Model building- Linear regression
+#Independent and Dependent variables
 X = daily_sales[['year', 'month', 'day', 'day_of_week']]
 y = daily_sales['Sales']
 
@@ -58,25 +54,31 @@ y_train, y_test = y[:split], y[split:]
 print("Training size:", len(X_train))
 print("Testing size:", len(X_test))
 
-
+#Model Building
 from sklearn.linear_model import LinearRegression
 
 model = LinearRegression()
 model.fit(X_train, y_train)
 predictions = model.predict(X_test)
-from sklearn.metrics import mean_absolute_error
 
+#Evaluation
+from sklearn.metrics import mean_absolute_error,mean_squared_error
+import numpy as np
 mae = mean_absolute_error(y_test, predictions)
 print("MAE:", mae)
+mse=mean_squared_error(y_test,predictions)
+print("MSE:",mse)
+rmse= np.sqrt(mse)
+print("RMSE:",rmse)
 
-
+#Plotting Actual vs predicted
 plt.figure(figsize=(10,5))
 plt.plot(range(len(y_test)), y_test.values, label="Actual")
 plt.plot(range(len(predictions)), predictions, label="Predicted (Linear Regression)")
 plt.legend()
 plt.grid(True)
 plt.title("Actual vs Predicted Sales")
-plt.savefig("outputs/graphs/actual_vs_predicted.png")
+plt.savefig("outputs/graphs/actual_vs_predicted_linear.png")
 plt.show()
 
 # future forecasting
@@ -99,7 +101,17 @@ plt.plot(future_df['Order Date'], future_predictions, label="Forecast", color='r
 plt.legend()
 plt.title("Future Sales Forecast (Next 30 Days)")
 plt.grid(True)
-plt.savefig("outputs/graphs/forecast.png")
+plt.savefig("outputs/graphs/linear_forecast.png")
+plt.show()
+
+# separate forecast plot (Linear Regression)
+plt.figure(figsize=(10,5))
+plt.plot(future_df['Order Date'], future_predictions, color='green')
+plt.title("Future Sales Forecast (Next 30 Days - Linear Regression)")
+plt.xlabel("Date")
+plt.ylabel("Predicted Sales")
+plt.grid(True)
+plt.savefig("outputs/graphs/linear_only_forecast.png")
 plt.show()
 
 #saving forecast
