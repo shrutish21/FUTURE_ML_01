@@ -1,141 +1,136 @@
-# 📊 Sales & Demand Forecasting using Machine Learning
+# 📊 Sales Forecasting using Machine Learning
 
-## 📌 Project Overview
-This project focuses on building a **Sales and Demand Forecasting system** using historical retail data from the Superstore dataset. The goal is to analyze past sales patterns and predict future sales to support better business decision-making.
+## 🔍 Project Overview
+This project analyzes historical sales data and predicts future sales using two approaches:
+- **Linear Regression (Machine Learning)**
+- **ARIMA (Time Series Forecasting)**
 
-Sales forecasting is a critical real-world Machine Learning application that helps businesses:
-- Plan inventory efficiently  
-- Manage cash flow  
-- Optimize staffing  
-- Avoid overstocking and losses  
+The objective is to compare both models and understand their effectiveness in real-world business scenarios.
 
 ---
 
-## 🎯 Objective
-The main objectives of this project are:
-- Analyze historical sales data  
-- Identify trends and seasonality  
-- Build forecasting models to predict future sales  
-- Visualize results in a business-friendly manner  
-- Provide actionable insights for decision-making  
+## 📁 Dataset
+- Dataset: **Superstore Sales Dataset**
+- Features used:
+  - Order Date
+  - Sales
+- Data is aggregated at a **daily level** for time series analysis.
 
 ---
 
-## 📂 Dataset Information
-The dataset used is the **Superstore dataset**, which contains retail transaction data.
-
-### Key Columns:
-- **Order Date** → Date of transaction  
-- **Sales** → Revenue generated per order  
-- **Category, Region** → Business context  
-
----
-
-## 🧹 Data Preprocessing
-The following preprocessing steps were performed:
-- Converted *Order Date* to datetime format  
-- Sorted data chronologically  
-- Aggregated sales at daily level  
-- Checked and handled missing values  
-- Prepared data for time-series analysis  
+## ⚙️ Data Preprocessing
+- Converted `Order Date` to datetime format
+- Aggregated total sales per day
+- Sorted data chronologically
+- Feature engineering (for Linear Regression):
+  - Year
+  - Month
+  - Day
+  - Day of Week
 
 ---
 
-## 🧠 Feature Engineering
-Time-based features were created to capture patterns:
-- Month  
-- Day  
-- Day of Week  
-- Year  
+## 🤖 Models Implemented
 
-These features help the model understand trends and seasonality.
+### 1️⃣ Linear Regression
+- Uses date-based features to predict sales
+- Captures general trends and seasonality
+- Simple and stable model
 
----
-
-## 🤖 Models Used
-
-### 🔹 Linear Regression (Baseline Model)
-- Used as a simple baseline model  
-- Captures general trends in data  
-
-### 🔹 ARIMA (Time Series Model) *(to be added)*
-- Captures trend and seasonality more effectively  
-- Suitable for time-series forecasting  
+### 2️⃣ ARIMA Model
+- Time series forecasting model
+- Uses past values to predict future values
+- Configuration used: **ARIMA(5,1,0)**
 
 ---
 
-## 📊 Evaluation Metrics
-Model performance is evaluated using:
-- **Mean Absolute Error (MAE)**  
-- **Root Mean Squared Error (RMSE)**  
+## 📈 Model Evaluation
 
-These metrics measure how close predictions are to actual values.
+| Model              | MAE   | RMSE  |
+|--------------------|-------|-------|
+| Linear Regression  | 1756  | 2386  |
+| ARIMA              | 1728  | 2655  |
 
 ---
 
-## 📈 Visualizations
+## 🔎 Observations
+- ARIMA has slightly **lower MAE**, indicating better average accuracy
+- Linear Regression has **lower RMSE**, meaning fewer large errors
+- ARIMA captures short-term patterns well but can be unstable
+- Linear Regression provides smoother and more stable predictions
+
+---
+
+## 📊 Visualizations
 The project includes:
-- Sales trend over time  
-- Monthly and yearly analysis  
-- Actual vs Predicted sales  
-- Future sales forecast  
-
-All visualizations are designed for **non-technical stakeholders**.
+- Daily Sales Trend
+- Actual vs Predicted (Linear Regression & ARIMA)
+- Future Forecast (30 days)
+- Separate Forecast Graphs for better clarity
 
 ---
 
-## 🔮 Forecasting Output
-The model predicts future sales for the next **30 days**.
+## 🔮 Forecasting
+- Forecasted **next 30 days of sales** using both models
+- Separate plots used to avoid scaling issues
 
-These forecasts help businesses:
-- Plan inventory  
-- Optimize operations  
-- Improve demand forecasting  
-- Reduce losses  
+### ⚠️ Important Insight
+ARIMA forecasts tend to flatten over long durations (e.g., 365 days) due to lack of new patterns. Therefore, short-term forecasting is more reliable.
 
 ---
 
-## 💡 Business Insights
-Key insights derived from the project:
-- Identification of sales trends over time  
-- Detection of high and low demand periods  
-- Understanding seasonal patterns  
-- Data-driven decision support  
+## ⚖️ Model Comparison
+
+| Aspect              | Linear Regression        | ARIMA                     |
+|---------------------|-------------------------|---------------------------|
+| Type                | Machine Learning        | Time Series               |
+| Input               | Engineered features     | Past values only          |
+| Strength            | Stability               | Pattern detection         |
+| Weakness            | Ignores time dependency | Sensitive to noise        |
+| Best Use Case       | Long-term trend         | Short-term forecasting    |
 
 ---
 
-## 🛠️ Tech Stack
-- Python  
-- Pandas  
-- NumPy  
-- Matplotlib  
-- Scikit-learn  
-- Statsmodels (for ARIMA)  
+## 💡 Business Insights & Conclusions
 
----
+- **Short-Term Planning:**  
+  ARIMA is better for short-term demand forecasting due to trend capturing.
 
-## 📁 Project Structure
-```
-FUTURE_ML_01/
-│
-├── data/
-├── src/
-├── outputs/
-├── README.md
-└── requirements.txt
-```
+- **Long-Term Strategy:**  
+  Linear Regression is more stable and suitable for long-term predictions.
 
+- **Inventory Management:**  
+  Helps maintain optimal stock levels and reduce losses.
+
+- **Sales Planning:**  
+  Enables businesses to prepare for demand fluctuations.
+
+- **Decision Making:**  
+  Using both models together provides better insights.
 
 ---
 
 ## 🚀 Future Improvements
-- Implement ARIMA and advanced models  
-- Hyperparameter tuning  
-- Deploy as a web/dashboard application  
-- Integrate real-time data  
+- Tune ARIMA parameters (p, d, q)
+- Try advanced models like LSTM or Prophet
+- Include external factors (holidays, promotions)
+- Deploy as a web application
 
 ---
 
-## 👩‍💻 Author
- - Shruti Shinde
- - B.E. AIML Student
+## 🛠️ Tech Stack
+- Python
+- Pandas, NumPy
+- Matplotlib
+- Scikit-learn
+- Statsmodels
+
+---
+
+## 📌 Conclusion
+Both models provide valuable insights. ARIMA is useful for capturing time-based patterns, while Linear Regression ensures stable predictions. A combined approach can improve business decision-making.
+
+---
+
+## 🙌 Author
+- Shruti Shinde
