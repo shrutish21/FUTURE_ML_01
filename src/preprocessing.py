@@ -16,5 +16,9 @@ def load_and_prepare_data():
     # sort by date
     daily_sales = daily_sales.sort_values('Order Date')
     daily_sales.sort_index(inplace=True)
-
+    
     return daily_sales
+if __name__ == "__main__":
+    daily_sales = load_and_prepare_data()
+    daily_sales.to_csv("outputs/daily_sales.csv", index=False)
+    print("daily_sales.csv saved successfully!")
